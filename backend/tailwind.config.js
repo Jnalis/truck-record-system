@@ -3,6 +3,11 @@ import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
 export default {
+    safelist: [
+        // Dynamic offline/online background (used in AuthenticatedLayout.vue)
+        'bg-slate-100',
+        'bg-red-100',
+    ],
     content: [
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',

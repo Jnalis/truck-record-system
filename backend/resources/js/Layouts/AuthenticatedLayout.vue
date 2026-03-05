@@ -10,6 +10,16 @@ const isOnline = ref(true);
 const page = usePage();
 const isAdmin = computed(() => page.props.auth?.user?.role === 'admin');
 
+const userName = computed(() => page.props.auth?.user?.name || 'User');
+
+const greeting = computed(() => {
+    const hour = new Date().getHours();
+    let timeGreeting = 'Good morning';
+    if (hour >= 12 && hour < 17) timeGreeting = 'Good afternoon';
+    else if (hour >= 17) timeGreeting = 'Good evening';
+    return `${timeGreeting}, ${userName.value}`;
+});
+
 function setOnline() {
     isOnline.value = true;
 }
@@ -152,14 +162,14 @@ onBeforeUnmount(() => {
                             :class="[
                                 'inline-flex items-center gap-1 rounded-md px-2 py-1',
                                 isOnline
-                                    ? 'bg-emerald-100 text-emerald-700'
-                                    : 'bg-red-100 text-red-700',
+                                    ? 'bg-emerald-500 text-white'
+                                    : 'bg-red-500 text-white',
                             ]"
                         >
                             <span
                                 :class="[
                                     'h-1.5 w-1.5 rounded-full',
-                                    isOnline ? 'bg-emerald-500' : 'bg-red-500',
+                                    isOnline ? 'bg-white' : 'bg-white',
                                 ]"
                             ></span>
                             {{ isOnline ? 'Online' : 'Offline' }}
@@ -262,7 +272,7 @@ onBeforeUnmount(() => {
                             <p
                                 class="text-[0.7rem] font-medium uppercase tracking-[0.18em] text-indigo-600"
                             >
-                                Good morning
+                                {{ greeting }}
                             </p>
                             <h1
                                 class="text-sm font-semibold leading-tight text-slate-800 md:text-base"
